@@ -1,0 +1,7 @@
+{
+  "name": "Magwegwe SDA Church",
+  "description": "A visually stunning and spiritually uplifting website for Magwegwe Seventh-day Adventist Church, featuring events, youth activities, development progress, and evangelism initiatives.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
