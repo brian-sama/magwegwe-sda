@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+  --font-inter: 'Inter', sans-serif;
+  --font-crimson: 'Crimson Pro', serif;
+}
+
+body {
+  font-family: var(--font-inter);
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-crimson);
+}
+
+/* Base styles to ensure content is visible even if Tailwind fails */
+.min-h-screen {
+  min-height: 100vh;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.bg-white {
+  background-color: white;
+}
+
+.overflow-x-hidden {
+  overflow-x: hidden;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}

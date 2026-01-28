@@ -2,13 +2,28 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 // Added Cross to the imports
-import { ArrowRight, MapPin, Clock, Calendar, Heart, Quote, Sparkles, Cross } from 'lucide-react';
+import { ArrowRight, MapPin, Clock, Calendar, Heart, Quote, Sparkles, Plus, Book } from 'lucide-react';
 import { CHURCH_NAME } from '../constants';
 import { GoogleGenAI } from "@google/genai";
 
 const Home: React.FC = () => {
   const [inspiration, setInspiration] = useState<string>("Loading spiritual encouragement...");
   const [loadingInspiration, setLoadingInspiration] = useState(true);
+  const [currentBgIndex, setCurrentBgIndex] = useState(0);
+
+  const backgroundImages = [
+    "https://images.unsplash.com/photo-1544427920-c49ccfb85579?auto=format&fit=crop&q=80&w=2000",
+    "https://images.unsplash.com/photo-1438232992991-995b7058bbb3?auto=format&fit=crop&q=80&w=2000",
+    "https://images.unsplash.com/photo-1510076857177-7470076d4098?auto=format&fit=crop&q=80&w=2000",
+    "https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&q=80&w=2000"
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentBgIndex((prev) => (prev + 1) % backgroundImages.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const fetchInspiration = async () => {
@@ -52,11 +67,15 @@ const Home: React.FC = () => {
       {/* Hero Section */}
       <section className="relative h-[95vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1544427920-c49ccfb85579?auto=format&fit=crop&q=80&w=2000" 
-            alt="SDA Church Exterior" 
-            className="w-full h-full object-cover brightness-[0.45]"
-          />
+          {backgroundImages.map((bg, index) => (
+            <img
+              key={bg}
+              src={bg}
+              alt={`SDA Church Background ${index + 1}`}
+              className={`absolute inset-0 w-full h-full object-cover brightness-[0.45] transition-opacity duration-1000 ${index === currentBgIndex ? 'opacity-100' : 'opacity-0'
+                }`}
+            />
+          ))}
           <div className="absolute inset-0 bg-gradient-to-b from-blue-900/40 via-transparent to-blue-950/80"></div>
         </div>
         <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
@@ -70,13 +89,13 @@ const Home: React.FC = () => {
             Experiencing the joy of salvation through Christ and sharing the light of His truth in Bulawayo.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300">
-            <Link 
-              to="/involved" 
+            <Link
+              to="/involved"
               className="w-full sm:w-auto px-10 py-5 bg-yellow-500 hover:bg-yellow-400 text-blue-950 font-black rounded-2xl transition-all shadow-xl shadow-yellow-500/20 flex items-center justify-center gap-3 group text-lg"
             >
-              Get Involved <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              Get involved in our evangelism <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
-            <button 
+            <button
               onClick={handleGetLocation}
               className="w-full sm:w-auto px-10 py-5 bg-white/10 hover:bg-white/20 text-white backdrop-blur-xl font-bold rounded-2xl transition-all border border-white/30 flex items-center justify-center gap-3 text-lg"
             >
@@ -86,20 +105,42 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* AI Daily Inspiration */}
+      {/* AI Daily Inspiration & Chapter of the Day */}
       <section className="relative -mt-16 z-20 px-4">
-        <div className="max-w-4xl mx-auto bg-white rounded-[2.5rem] shadow-2xl p-8 md:p-12 border border-blue-50">
-          <div className="flex flex-col md:flex-row items-center gap-8">
-            <div className="w-20 h-20 bg-blue-900 rounded-3xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-blue-900/20">
-              <Sparkles className="w-10 h-10 text-yellow-400" />
-            </div>
-            <div className="flex-grow">
-              <div className="flex items-center gap-2 text-blue-700 font-bold uppercase tracking-widest text-xs mb-3">
-                <Quote className="w-4 h-4" /> Daily Word of Encouragement
+        <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+          <div className="bg-white rounded-[2.5rem] shadow-2xl p-8 md:p-10 border border-blue-50 flex items-center">
+            <div className="flex flex-col md:flex-row items-center gap-6">
+              <div className="w-16 h-16 bg-blue-900 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-blue-900/20">
+                <Sparkles className="w-8 h-8 text-yellow-400" />
               </div>
-              <p className={`text-xl md:text-2xl text-gray-800 font-serif italic leading-relaxed ${loadingInspiration ? 'animate-pulse' : ''}`}>
-                "{inspiration}"
-              </p>
+              <div className="flex-grow">
+                <div className="flex items-center gap-2 text-blue-700 font-bold uppercase tracking-widest text-[10px] mb-2">
+                  <Quote className="w-3 h-3" /> Daily Word of Encouragement
+                </div>
+                <p className={`text-lg md:text-xl text-gray-800 font-serif italic leading-relaxed ${loadingInspiration ? 'animate-pulse' : ''}`}>
+                  "{inspiration}"
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-blue-950 rounded-[2.5rem] shadow-2xl p-8 md:p-10 border border-blue-900/50 flex items-center group overflow-hidden relative">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-yellow-500/10 rounded-full blur-3xl -mr-16 -mt-16 group-hover:bg-yellow-500/20 transition-colors"></div>
+            <div className="flex flex-col md:flex-row items-center gap-6 relative z-10 w-full">
+              <div className="w-16 h-16 bg-yellow-500 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-yellow-500/20">
+                <Book className="w-8 h-8 text-blue-950" />
+              </div>
+              <div className="flex-grow">
+                <div className="flex items-center gap-2 text-yellow-500 font-bold uppercase tracking-widest text-[10px] mb-2">
+                  Chapter of the Day
+                </div>
+                <h3 className="text-2xl font-black text-white mb-1">Psalm 119</h3>
+                <p className="text-blue-200 text-sm italic font-light italic">"Thy word is a lamp unto my feet, and a light unto my path."</p>
+                <div className="mt-4 flex gap-4">
+                  <button className="text-[10px] bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-full font-bold transition-colors">Read Full Chapter</button>
+                  <button className="text-[10px] bg-yellow-500 hover:bg-yellow-400 text-blue-950 px-3 py-1.5 rounded-full font-bold transition-colors">Listen Audio</button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -112,7 +153,7 @@ const Home: React.FC = () => {
             <div className="order-2 lg:order-1">
               <span className="text-blue-700 font-bold tracking-[0.2em] uppercase text-sm mb-6 block">Our Sabbath Schedule</span>
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 leading-tight">Join us for a day of rest and worship</h2>
-              
+
               <div className="grid gap-8">
                 <div className="group p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:border-blue-200 hover:bg-blue-50/30 transition-all duration-300">
                   <div className="flex gap-6">
@@ -145,18 +186,17 @@ const Home: React.FC = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="order-1 lg:order-2 relative">
               <div className="relative z-10 rounded-[3rem] overflow-hidden h-[500px] shadow-2xl border-8 border-white">
-                <iframe 
+                <iframe
                   title="Church Location"
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15024.12345678!2d28.4897!3d-20.1473!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1eb5500000000001%3A0x0000000000000000!2sMagwegwe%2C%20Bulawayo!5e0!3m2!1sen!2szw!4v1620000000000!5m2!1sen!2szw"
-                  width="100%" 
-                  height="100%" 
-                  style={{ border: 0 }} 
-                  allowFullScreen={true} 
+                  width="100%"
+                  height="100%"
+                  allowFullScreen={true}
                   loading="lazy"
-                  className="brightness-90 hover:brightness-100 transition-all"
+                  className="brightness-90 hover:brightness-100 transition-all border-0"
                 ></iframe>
               </div>
               {/* Decorative elements */}
@@ -196,7 +236,7 @@ const Home: React.FC = () => {
 
             <div className="bg-white p-10 rounded-[2.5rem] shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 flex flex-col items-center text-center">
               <div className="w-20 h-20 bg-green-50 text-green-700 rounded-3xl flex items-center justify-center mb-8 rotate-6">
-                <Cross className="w-10 h-10" />
+                <Plus className="w-10 h-10" />
               </div>
               <h3 className="text-2xl font-bold mb-4 text-gray-900">Evangelism</h3>
               <p className="text-gray-600 mb-8 leading-relaxed">Partner with us as we fulfill the Great Commission locally.</p>

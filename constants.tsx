@@ -1,7 +1,7 @@
 
 import { Leader, EventItem, ProjectProgress, PathfinderPhoto, Announcement } from './types';
 
-export const CHURCH_NAME = "Magwegwe SDA Church";
+export const CHURCH_NAME = "Seventh Day Adventist Church Magwegwe West";
 
 export const LEADERS: Leader[] = [
   {
@@ -86,10 +86,9 @@ export const PROJECTS: ProjectProgress[] = [
 ];
 
 export const YOUTH_GALLERY: PathfinderPhoto[] = [
-  { id: 'y1', url: 'https://picsum.photos/600/600?random=20', caption: 'Pathfinder Camporee 2024', date: 'Jan 2024' },
-  { id: 'y2', url: 'https://picsum.photos/600/600?random=21', caption: 'Bible Drill Contest', date: 'Feb 2024' },
-  { id: 'y3', url: 'https://picsum.photos/600/600?random=22', caption: 'Community Service Day', date: 'Dec 2023' },
-  { id: 'y4', url: 'https://picsum.photos/600/600?random=23', caption: 'Hiking Trip - Matopos', date: 'Nov 2023' },
+  { id: 'y1', url: '/images/pathfinder-1.jpg', caption: 'Pathfinder Parade', date: '2024' },
+  { id: 'y2', url: '/images/pathfinder-2.jpg', caption: 'Pathfinder Drill', date: '2024' },
+  { id: 'y3', url: '/images/pathfinder-3.jpg', caption: 'Pathfinder March', date: '2024' },
 ];
 
 export const ANNOUNCEMENTS: Announcement[] = [

@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Cross } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 import { CHURCH_NAME } from '../constants';
 
 const Navbar: React.FC = () => {
@@ -10,12 +10,28 @@ const Navbar: React.FC = () => {
 
   const navLinks = [
     { name: 'Home', path: '/' },
-    { name: 'About', path: '/about' },
-    { name: 'Events', path: '/events' },
-    { name: 'Development', path: '/development' },
-    { name: 'Youth', path: '/youth' },
-    { name: 'Involved', path: '/involved' },
-    { name: 'Announcements', path: '/announcements' },
+    {
+      name: 'About',
+      children: [
+        { name: 'About Us', path: '/about' },
+        { name: 'Organogram', path: '/organogram' },
+        { name: 'Doctrine', path: '/doctrine' },
+      ],
+    },
+    {
+      name: 'Ministries',
+      children: [
+        { name: 'Overview', path: '/departments' },
+        { name: 'Music Ministry', path: '/departments/music' },
+        { name: 'Sabbath School', path: '/departments/sabbath-school' },
+        { name: 'Dorcas Relief', path: '/departments/dorcas' },
+        { name: 'Pathfinders', path: '/youth/pathfinders' },
+        { name: 'Adventurers', path: '/youth/adventurers' },
+        { name: 'Senior Youth', path: '/youth/senior' },
+      ],
+    },
+    { name: 'Events & News', path: '/events' },
+    { name: 'Church Development', path: '/development' },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -39,17 +55,41 @@ const Navbar: React.FC = () => {
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden lg:flex space-x-6">
+          <div className="hidden lg:flex items-center space-x-1">
             {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className={`text-sm font-bold uppercase tracking-wide transition-colors ${
-                  isActive(link.path) ? 'text-blue-700' : 'text-gray-500 hover:text-blue-700'
-                }`}
-              >
-                {link.name}
-              </Link>
+              <div key={link.name} className="relative group px-3 py-2">
+                {link.path ? (
+                  <Link
+                    to={link.path}
+                    className={`text-sm font-bold uppercase tracking-wide transition-all duration-300 hover:text-blue-700 ${isActive(link.path) ? 'text-blue-700' : 'text-gray-600'
+                      }`}
+                  >
+                    {link.name}
+                  </Link>
+                ) : (
+                  <button className="flex items-center space-x-1 text-sm font-bold uppercase tracking-wide text-gray-600 group-hover:text-blue-700 transition-all duration-300">
+                    <span>{link.name}</span>
+                    <ChevronDown className="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" />
+                  </button>
+                )}
+
+                {link.children && (
+                  <div className="absolute left-0 mt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                    <div className="bg-white rounded-xl shadow-2xl border border-gray-100 overflow-hidden py-2 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                      {link.children.map((child) => (
+                        <Link
+                          key={child.path}
+                          to={child.path}
+                          className={`block px-4 py-2.5 text-sm font-medium transition-colors hover:bg-blue-50 hover:text-blue-700 ${isActive(child.path) ? 'text-blue-700 bg-blue-50/50' : 'text-gray-700'
+                            }`}
+                        >
+                          {child.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             ))}
           </div>
 
@@ -71,18 +111,39 @@ const Navbar: React.FC = () => {
         <div className="lg:hidden bg-white border-t border-gray-100 animate-in slide-in-from-top duration-300">
           <div className="px-4 pt-2 pb-6 space-y-2">
             {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                onClick={() => setIsOpen(false)}
-                className={`block px-4 py-4 rounded-xl text-lg font-bold ${
-                  isActive(link.path)
-                    ? 'bg-blue-50 text-blue-700'
-                    : 'text-gray-700 hover:bg-gray-50'
-                }`}
-              >
-                {link.name}
-              </Link>
+              <div key={link.name}>
+                {link.path ? (
+                  <Link
+                    to={link.path}
+                    onClick={() => setIsOpen(false)}
+                    className={`block px-4 py-3 rounded-xl text-lg font-bold transition-all ${isActive(link.path)
+                      ? 'bg-blue-600 text-white shadow-lg shadow-blue-200'
+                      : 'text-gray-700 hover:bg-gray-50'
+                      }`}
+                  >
+                    {link.name}
+                  </Link>
+                ) : (
+                  <div className="space-y-1">
+                    <div className="px-4 py-3 text-sm font-black uppercase tracking-widest text-gray-400">
+                      {link.name}
+                    </div>
+                    {link.children?.map((child) => (
+                      <Link
+                        key={child.path}
+                        to={child.path}
+                        onClick={() => setIsOpen(false)}
+                        className={`block px-8 py-3 rounded-xl text-base font-bold transition-all ${isActive(child.path)
+                          ? 'bg-blue-50 text-blue-700'
+                          : 'text-gray-600 hover:bg-gray-50'
+                          }`}
+                      >
+                        {child.name}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
             ))}
           </div>
         </div>
