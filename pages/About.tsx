@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { LEADERS } from '../constants';
 import { Shield, Target, History } from 'lucide-react';
 import VideoPlayer from '../components/VideoPlayer';
 
@@ -93,42 +92,6 @@ const About: React.FC = () => {
                   "Remembering the way the Lord has led us in our past history."
                 </p>
               </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Leadership Hierarchy */}
-        <div className="bg-gray-50 rounded-3xl p-12 lg:p-20">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Church Leadership</h2>
-            <p className="text-gray-600">Committed servants leading our congregation.</p>
-          </div>
-
-          <div className="flex flex-col items-center">
-            {/* Primary Leader */}
-            <div className="mb-20 text-center group">
-              <div className="relative w-64 h-80 rounded-2xl overflow-hidden shadow-xl mb-6 mx-auto transition-transform group-hover:scale-[1.02]">
-                <img src={LEADERS[0].image} alt={LEADERS[0].name} className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-blue-950/80 to-transparent"></div>
-              </div>
-              <h3 className="text-2xl font-bold text-blue-950">{LEADERS[0].name}</h3>
-              <p className="text-yellow-600 font-semibold">{LEADERS[0].role}</p>
-            </div>
-
-            {/* Other Leaders Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 w-full">
-              {LEADERS.slice(1).map((leader) => (
-                <div key={leader.id} className="text-center group">
-                  <div className="relative w-full aspect-[4/5] rounded-2xl overflow-hidden shadow-lg mb-6 transition-transform group-hover:scale-[1.02]">
-                    <img src={leader.image} alt={leader.name} className="w-full h-full object-cover" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-blue-950/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
-                      <p className="text-white text-sm italic">{leader.bio || 'Faithful servant of the church.'}</p>
-                    </div>
-                  </div>
-                  <h3 className="text-xl font-bold text-blue-950">{leader.name}</h3>
-                  <p className="text-gray-600">{leader.role}</p>
-                </div>
-              ))}
             </div>
           </div>
         </div>

@@ -38,3 +38,16 @@ export interface PathfinderPhoto {
   caption: string;
   date: string;
 }
+
+export interface Choir {
+  id: string;
+  name: string;
+  description?: string;
+  image: string;
+}
+
+export interface MinistryGroup {
+  id: string;
+  name: string;
+  image: string;
+}

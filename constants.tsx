@@ -1,5 +1,5 @@
 
-import { Leader, EventItem, ProjectProgress, PathfinderPhoto, Announcement } from './types';
+import { Leader, EventItem, ProjectProgress, PathfinderPhoto, Announcement, Choir, MinistryGroup } from './types';
 
 export const CHURCH_NAME = "Seventh Day Adventist Church Magwegwe West";
 
@@ -103,5 +103,56 @@ export const ANNOUNCEMENTS: Announcement[] = [
     title: 'Harvest Thanksgiving',
     date: 'April 5th',
     content: 'Join us for a special service as we thank God for His bountiful blessings.'
+  }
+];
+
+export const CHURCH_CHOIRS: Choir[] = [
+  {
+    id: 'c1',
+    name: 'Church Choir',
+    description: 'Our main choir leading worship in traditional and contemporary styles.',
+    image: '/images/choir-main.jpg'
+  },
+  {
+    id: 'c2',
+    name: 'Sabbath School Choir',
+    description: 'Inspiring songs and hymns for Sabbath school services.',
+    image: '/images/choir-sabbath.jpg'
+  },
+  {
+    id: 'c3',
+    name: 'SDA Youth Choir',
+    description: 'Contemporary praise and worship from our young voices.',
+    image: '/images/choir-youth.jpg'
+  },
+  {
+    id: 'c4',
+    name: 'Pathfinder Choir',
+    description: 'The Pathfinder unit bringing joy through musical service.',
+    image: '/images/choir-pathfinder.jpg'
+  },
+  {
+    id: 'c5',
+    name: 'Adventure Choir',
+    description: 'Our youngest members learning to praise through song.',
+    image: '/images/choir-adventure.jpg'
+  }
+];
+
+export const MINISTRY_GROUPS: MinistryGroup[] = [
+  {
+    id: 'mg1',
+    name: 'Awaiting Ministries',
+    image: 'https://picsum.photos/400/300?random=20'
+  },
+  {
+    id: 'mg2',
+    name: 'The Haven',
+    image: 'https://picsum.photos/400/300?random=21'
+  },
+  {
+    id: 'mg3',
+    name: 'Heavenly Tremor',
+    image: 'https://picsum.photos/400/300?random=22'
   }
 ];
